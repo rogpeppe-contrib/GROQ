@@ -132,7 +132,13 @@ For logical expressions, the score is the sum of the clauses of the expression e
 
 The scoring function for `match` is left as an implementation detail and not covered by this specification. For example, an implementation may choose to use a TF/IDF or similar text scoring function that uses the text corpus and language configuration for the given field to compute a text score.
 
-A boosted predicate simply adds the boost value to the score if the predicate matches. For example, `boost(a > 1, 10)` would result in a score of 11 for any expression matching `a > 1`.
+A boosted predicate simply adds the boost value to the score if the predicate matches. For example:
+
+```example
+* | score(boost(a > 1, 10))
+```
+
+should assign a score of 12.0 to any document where `a > 1` (the initial score of 1.0, plus 1.0 for the matching predicate, plus the boost value of 10), and a score of 1.0 to any non-matching document.
 
 ## Selector evaluation
 
